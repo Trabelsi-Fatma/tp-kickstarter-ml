@@ -1,0 +1,8 @@
+# Dépendances de l'API seule (utilisées par Render). Remplacez les versions par celles de VOTRE ordinateur (voir le guide).
+fastapi>=0.115
+uvicorn[standard]>=0.30
+scikit-learn>=1.5
+joblib>=1.4
+pandas>=2
+numpy>=1.26
+pydantic>=2
