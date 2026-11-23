@@ -1,10 +1,11 @@
 import datetime
+import os
 
 import pandas as pd
 import requests
 import streamlit as st
 
-API_URL = "http://127.0.0.1:8000"
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 MAIN_CATEGORIES = ["Technology", "Design", "Games", "Fashion", "Food"]
 
 st.set_page_config(page_title="Succès Kickstarter", page_icon="🚀")
@@ -15,7 +16,7 @@ st.write("Renseignez la fiche du projet **avant son lancement** : l'API prédit 
 
 @st.cache_data(ttl=60)
 def charger_catalogue():
-    r = requests.get(f"{API_URL}/categories", timeout=5)
+    r = requests.get(f"{API_URL}/categories", timeout=90)
     r.raise_for_status()
     return r.json()
 
@@ -53,7 +54,7 @@ if st.button("Prédire"):
         "date_lancement": date_lancement.isoformat(),
     }
     try:
-        response = requests.post(f"{API_URL}/predict", json=payload, timeout=5)
+        response = requests.post(f"{API_URL}/predict", json=payload, timeout=90)
     except requests.exceptions.RequestException:
         st.error("Impossible de joindre l'API. Le serveur est-il lancé ?")
     else:
